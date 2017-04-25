@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="queueApp">
+<head>
+    <meta charset="UTF-8">
+    <title>排队叫号主页</title>
+    <!--样式内容-->
+    <link href="static/metronic/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"
+          type="text/css"/>
+    <link rel="stylesheet" href="static/icheck/skins/all.css"/>
+    <link href="static/metronic/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet"
+          type="text/css"/>
+    <link href="static/bootstrap/css/bootstrap.css" rel="stylesheet"
+          type="text/css"/>
+    <link rel="stylesheet" href="static/bootstrap/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="static/layui/layer-v2.4/layer/skin/layer.css"/>
+    <link rel="stylesheet" href="static/layui/laydate/need/laydate.css"/>
+    <link rel="stylesheet" href="static/layui/laydate/skins/danlan/laydate.css"/>
+    <link href="static/metronic/assets/global/css/components.min.css" rel="stylesheet" id="style_components"
+          type="text/css"/>
+    <link href="static/metronic/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="static/metronic/assets/global/plugins/angular-ui-grid/ui-grid.css"/>
+    <link rel="stylesheet" href="static/metronic/assets/global/plugins/jsdicom/main.css"/>
+    <link href="static/metronic/assets/layouts/layout2/css/layout.min.css" rel="stylesheet" type="text/css"/>
+    <link href="static/metronic/assets/layouts/layout2/css/themes/blue.min.css" rel="stylesheet" type="text/css"
+          id="style_color"/>
+    <link href="static/metronic/assets/layouts/layout2/css/custom.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="static/angular/ui-bootstrap-csp.css">
+    <link rel="stylesheet" href="static/angular-ui-grid/ui-grid.css">
+    <link rel="stylesheet" href="static/metronic/assets/pages/css/login.min.css">
+
+    <link rel="stylesheet" href="style/common.css">
+    <style>
+        body .layui-layer-hui {
+            background-color: rgba(0, 153, 61, 0.6);
+        }
+
+        body .layui-layer-hui .layui-layer-content {
+            text-align: center;
+            font-size:150px;
+            padding-top:100px;
+        }
+    </style>
+</head>
+<body ng-controller="indexCtrl" ng-controller="indexCtrl">
+<div ui-view="content">
+</div>
+
+<!--脚本内容-->
+<script src="static/jquery/dist/jquery.js"></script>
+<script src="static/howler/dist/howler.min.js"></script>
+<script src="static/layui/layer-v2.4/layer/layer.js"></script>
+<script src="static/angular/angular.js"></script>
+<script src="static/angular-websocket/dist/angular-websocket.js"></script>
+<script src="static/bootstrap/js/bootstrap.js"></script>
+<script src="static/angular-ui-grid/ui-grid.js"></script>
+<script src="static/angular/angular-local-storage.js"></script>
+<script src="static/angular/angular-ui-router.js"></script>
+<script src="static/angular/ui-bootstrap.js"></script>
+<script src="static/angular/ui-bootstrap-tpls.js"></script>
+
+
+
+<!--state-->
+<script src="javascript/state/state.js"></script>
+<!--directive-->
+<script src="javascript/directive/auto-height.js"></script>
+</body>
+</html>
