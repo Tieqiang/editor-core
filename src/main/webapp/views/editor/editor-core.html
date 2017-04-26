@@ -18,3 +18,39 @@
         <button class="btn btn-sm btn-primary" ng-click="doOk();">保存</button>
     </div>
 </script>
+
+<script type="text/ng-template" id="saveModal.html">
+    <div class="modal-header">
+        <div class="modal-title">
+            <span><h3>模板保存</h3></span>
+        </div>
+    </div>
+    <div class="modal-body">
+        <form class="form form-horizontal">
+            <input type="hidden" ng-model="currentTemplate.templateGroupId">
+            <input type="hidden" ng-model="currentTemplate.id">
+            <input type="hidden" ng-model="currentTemplate.status">
+            <div class="form-group">
+                <label  class="control-label col-md-3">
+                    模板名称
+                </label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" ng-model="currentTemplate.templateName">
+                </div>
+            </div>
+            <div class="form-group">
+                <label  class="control-label col-md-3">
+                    模板序号
+                </label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" ng-model="currentTemplate.templateNo">
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-white" ng-click="doCancel();">取消</button>
+        <button class="btn btn-info" ng-click="doOk();">确定</button>
+    </div>
+</script>

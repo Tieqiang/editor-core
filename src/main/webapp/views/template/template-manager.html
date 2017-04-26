@@ -1,0 +1,50 @@
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption">
+            <span class="caption-subject"><h3>模板管理</h3></span>
+        </div>
+        <div class="actions">
+
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-md-3">
+                <div id="tree">
+
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-2" ng-repeat="temp in templates">
+                        <div class="color-demo">
+                            <div class="color-view bg-blue-madison bg-font-blue-madison c-font-12"
+                                 style="font-size: 12px;">{{temp.templateName}}
+                            </div>
+                            <div class="color-info bg-white">
+                                <a href="javascript:;" class="btn btn-circle btn-icon-only btn-default" ng-click="editTemplate(temp)">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a href="javascript:;" class="btn btn-circle btn-icon-only btn-default" ng-click="removeTemplate(temp)">
+                                    <i class="fa fa-remove"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="color-demo">
+                            <div class="color-view bg-green-steel bg-font-green-steel" style="font-size: 12px"> 新模板</div>
+                            <div class="color-info bg-white c-font-14">
+                                <a href="javascript:;" class="btn btn-circle btn-icon-only btn-default" ng-click="newTemplate()">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

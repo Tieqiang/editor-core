@@ -51,6 +51,10 @@ editorApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvid
     //模板制作
     $stateProvider.state("index.templateMake",{
         url:"/template",
+        params:{
+            template:null,
+            groupId:null
+        },
         views:{
             'mainContent':{
                 templateUrl:'views/editor/editor-core.html',
@@ -86,6 +90,29 @@ editorApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvid
                     insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
                     files: [
                         'javascript/controllers/template/template-group-ctrl.js',
+                        'static/metronic/assets/global/plugins/jstree/dist/jstree.js',
+                        'static/metronic/assets/global/plugins/jstree/dist/themes/default/style.min.css'
+                    ]
+                })
+            }]
+        }
+    })
+    //模板管理
+    $stateProvider.state("index.templateManager",{
+        url:"/template-manager",
+        views:{
+            'mainContent':{
+                templateUrl:'views/template/template-manager.html',
+                controller:"templateManagerCtrl"
+            }
+        },
+        resolve:{
+            loadCtrl:['$ocLazyLoad',function($ocLazyLoad){
+                return $ocLazyLoad.load({
+                    name: 'editorApp',
+                    insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                    files: [
+                        'javascript/controllers/template/template-manager-ctrl.js',
                         'static/metronic/assets/global/plugins/jstree/dist/jstree.js',
                         'static/metronic/assets/global/plugins/jstree/dist/themes/default/style.min.css'
                     ]

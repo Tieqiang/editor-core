@@ -2,15 +2,15 @@
     <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-hover-submenu "
         data-keep-expanded="false"
         data-auto-scroll="true" data-slide-speed="200">
-        <li class="nav-item" ng-class="{true:'start active open',false:''}[nowState=='templateMake']"
-            ng-click="menuClick('templateMake');">
-            <a href="javascript:;" class="nav-link nav-toggle" ui-sref="index.templateMake">
-                <i class="icon-home"></i>
-                <span class="title">模板制作</span>
-                <span class="selected" ng-if="nowState=='templateMake'"></span>
-                <span class="arrow open"></span>
-            </a>
-        </li>
+        <!--<li class="nav-item" ng-class="{true:'start active open',false:''}[nowState=='templateMake']"-->
+            <!--ng-click="menuClick('templateMake');">-->
+            <!--<a href="javascript:;" class="nav-link nav-toggle" ui-sref="index.templateMake">-->
+                <!--<i class="icon-home"></i>-->
+                <!--<span class="title">模板制作</span>-->
+                <!--<span class="selected" ng-if="nowState=='templateMake'"></span>-->
+                <!--<span class="arrow open"></span>-->
+            <!--</a>-->
+        <!--</li>-->
         <li class="nav-item" ng-click="menuClick('templateGroup','模板分组管理');"
             ng-class="{true:'start active open',false:''}[nowState=='templateGroup']">
             <a href="javascript:;" class="nav-link nav-toggle" ui-sref="index.templateGroup">
@@ -20,12 +20,12 @@
                 <span class="arrow open"></span>
             </a>
         </li>
-        <li class="nav-item" ng-click="menuClick('workstation','工作点管理');"
-            ng-class="{true:'start active open',false:''}[nowState=='workstation']">
-            <a href="javascript:;" class="nav-link nav-toggle" ui-sref="admin.workstation">
+        <li class="nav-item" ng-click="menuClick('templateManager','模板管理');"
+            ng-class="{true:'start active open',false:''}[nowState=='templateManager']">
+            <a href="javascript:;" class="nav-link nav-toggle" ui-sref="index.templateManager">
                 <i class="icon-settings"></i>
-                <span class="title">工作点管理</span>
-                <span class="selected" ng-if="nowState=='workstation'"></span>
+                <span class="title">模板管理</span>
+                <span class="selected" ng-if="nowState=='templateManager'"></span>
                 <span class="arrow open"></span>
             </a>
         </li>

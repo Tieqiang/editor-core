@@ -27,3 +27,17 @@ editorApp.config(['$controllerProvider', function($controllerProvider) {
     // in new ones!
     $controllerProvider.allowGlobals();
 }]);
+
+
+//双重判断，如果状态发生改变
+editorApp.run(['$rootScope','$log','localStorageService',function($rootScope,$log,localStorageService){
+    //状态改变
+    $rootScope.$on("stateChangeStart",function(event, toState, toParams, fromState, fromParams, options){
+        console.log(fromState) ;
+        if(fromState=='index.templateMake'){
+            alert("离开了")
+        }
+    })
+
+}])
+
