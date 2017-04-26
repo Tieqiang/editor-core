@@ -5,46 +5,46 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
 
-    <!--<welcome-file-list>-->
-        <!--<welcome-file>login.html</welcome-file>-->
-    <!--</welcome-file-list>-->
+    <welcome-file-list>
+        <welcome-file>login.html</welcome-file>
+    </welcome-file-list>
 
-    <!--&lt;!&ndash; 激活Tomcat的defaultServlet来处理静态文件 &ndash;&gt;-->
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>default</servlet-name>-->
-        <!--<url-pattern>*.jpg</url-pattern>-->
-    <!--</servlet-mapping>-->
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>default</servlet-name>-->
-        <!--<url-pattern>*.gif</url-pattern>-->
-    <!--</servlet-mapping>-->
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>default</servlet-name>-->
-        <!--<url-pattern>*.png</url-pattern>-->
-    <!--</servlet-mapping>-->
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>default</servlet-name>-->
-        <!--<url-pattern>*.js</url-pattern>-->
-    <!--</servlet-mapping>-->
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>default</servlet-name>-->
-        <!--<url-pattern>*.css</url-pattern>-->
-    <!--</servlet-mapping>-->
+    <!-- 激活Tomcat的defaultServlet来处理静态文件 -->
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.jpg</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.gif</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.png</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
 
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>default</servlet-name>-->
-        <!--<url-pattern>*.html</url-pattern>-->
-    <!--</servlet-mapping>-->
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.html</url-pattern>
+    </servlet-mapping>
 
-    <!--<servlet>-->
-        <!--　　&lt;!&ndash; Override init parameter to avoid nasty &ndash;&gt;-->
-        <!--　　&lt;!&ndash; file locking issue on windows.         &ndash;&gt;-->
-        <!--　　<servlet-name>default</servlet-name>-->
-        <!--　　<init-param>-->
-            <!--　　<param-name>useFileMappedBuffer</param-name>-->
-            <!--　　<param-value>false</param-value>-->
-        <!--　　</init-param>-->
-<!--　　</servlet>-->
+    <servlet>
+        　　<!-- Override init parameter to avoid nasty -->
+        　　<!-- file locking issue on windows.         -->
+        　　<servlet-name>default</servlet-name>
+        　　<init-param>
+            　　<param-name>useFileMappedBuffer</param-name>
+            　　<param-value>false</param-value>
+        　　</init-param>
+　　</servlet>
 
 
     <servlet>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="queueApp">
+<html lang="en" ng-app="editorApp">
 <head>
     <meta charset="UTF-8">
-    <title>排队叫号主页</title>
+    <title>编辑器页面</title>
     <!--样式内容-->
     <link href="static/metronic/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"
           type="text/css"/>
@@ -27,22 +27,17 @@
     <link rel="stylesheet" href="static/angular/ui-bootstrap-csp.css">
     <link rel="stylesheet" href="static/angular-ui-grid/ui-grid.css">
     <link rel="stylesheet" href="static/metronic/assets/pages/css/login.min.css">
-
     <link rel="stylesheet" href="style/common.css">
     <style>
-        body .layui-layer-hui {
-            background-color: rgba(0, 153, 61, 0.6);
-        }
-
-        body .layui-layer-hui .layui-layer-content {
-            text-align: center;
-            font-size:150px;
-            padding-top:100px;
+        .page-header.navbar.navbar-fixed-top, .page-header.navbar.navbar-static-top {
+            z-index: 500
         }
     </style>
 </head>
 <body ng-controller="indexCtrl" ng-controller="indexCtrl">
 <div ui-view="content">
+
+
 </div>
 
 <!--脚本内容-->
@@ -57,12 +52,21 @@
 <script src="static/angular/angular-ui-router.js"></script>
 <script src="static/angular/ui-bootstrap.js"></script>
 <script src="static/angular/ui-bootstrap-tpls.js"></script>
+<script src="static/oclazyload/ocLazyLoad.js"></script>
 
-
-
+<script src="static/ueditor/ueditor.config.js"></script>
+<script src="static/ueditor/ueditor.all.js"></script>,
+<script src="static/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script src="static/ueditor/formdesign/leipi.formdesign.v4.js"></script>
+<!--app-->
+<script src="javascript/app/editorApp.js"></script>
 <!--state-->
 <script src="javascript/state/state.js"></script>
 <!--directive-->
 <script src="javascript/directive/auto-height.js"></script>
+<!--controller-->
+<script src="javascript/controllers/common/index-ctrl.js"></script>
+<!--service-->
+<script src="javascript/service/tools.js"></script>
 </body>
 </html>

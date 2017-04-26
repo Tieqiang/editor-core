@@ -1,0 +1,54 @@
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption">
+            <span class="caption-subject"><h3>模板分组维护</h3></span>
+        </div>
+        <div class="actions">
+
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div id="tree" class="tree-demo">
+
+        </div>
+    </div>
+</div>
+
+
+<script type="text/ng-template" id="groupModal.html">
+    <div class="modal-header">
+        <span class="modal-title">
+            <h3>
+                {{action}}
+            </h3>
+        </span>
+    </div>
+    <div class="modal-body">
+        <form class="from form-horizontal">
+            <input type="hidden" ng-model="currentGroup.id">
+            <input type="hidden" ng-model="currentGroup.parentId">
+            <input type="hidden" ng-model="currentGroup.status">
+            <div class="form-group">
+                <label class="control-label col-md-3">
+                    分组名称
+                </label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" ng-model="currentGroup.templateGroupName">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">
+                    拼音码
+                </label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" ng-model="currentGroup.inputCode">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-white" ng-click="doCancel();">取消</button>
+        <button class="btn btn-success" ng-click="doOk();">确定</button>
+    </div>
+
+</script>

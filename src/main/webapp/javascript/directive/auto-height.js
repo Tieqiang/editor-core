@@ -2,7 +2,7 @@
  * Created by Administrator on 2017/4/11.
  */
 
-var autoHeight = queueApp.directive("autoHeight",function($window){
+var autoHeight = editorApp.directive("autoHeight",function($window){
     return {
         restrict : 'A',
         scope : {},

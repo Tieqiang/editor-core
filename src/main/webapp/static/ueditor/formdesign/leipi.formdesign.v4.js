@@ -231,6 +231,7 @@ UE.plugins['radio'] = function () {
     });
 };
  */
+
 /**
  * 复选框
  * @command checkbox
@@ -241,6 +242,7 @@ UE.plugins['radio'] = function () {
  * editor.execCommand( 'checkbox');
  * ```
  */
+
 UE.plugins['checkbox'] = function () {
     var me = this,thePlugins = 'checkbox';
     me.commands[thePlugins] = {
@@ -980,10 +982,11 @@ UE.registerUI('button_template',function(editor,uiName){
     editor.registerCommand(uiName,{
         execCommand:function(){
             try {
-                leipiFormDesign.exec('leipi_template');
+                // leipiFormDesign.exec('leipi_template');
                 //leipiFormDesign.fnCheckForm('save');
+                editor.templateView();
             } catch ( e ) {
-                alert('打开模板异常');
+                parent.layer.alert('打开模板异常');
             }
             
         }
@@ -1015,9 +1018,10 @@ UE.registerUI('button_preview',function(editor,uiName){
     editor.registerCommand(uiName,{
         execCommand:function(){
             try {
-                leipiFormDesign.fnReview();
+                // leipiFormDesign.fnReview();
+                editor.preView();
             } catch ( e ) {
-                alert('leipiFormDesign.fnReview 预览异常');
+                parent.layer.alert('editor.templateView()出现异常，或没有定义');
             }
         }
     });
@@ -1049,9 +1053,10 @@ UE.registerUI('button_save',function(editor,uiName){
     editor.registerCommand(uiName,{
         execCommand:function(){
             try {
-                leipiFormDesign.fnCheckForm('save');
+                // leipiFormDesign.fnCheckForm('save');
+                editor.save();
             } catch ( e ) {
-                alert('leipiFormDesign.fnCheckForm("save") 保存异常');
+                parent.layer.alert('保存方法异常');
             }
             
         }

@@ -1,66 +1,97 @@
 /**
  * Created by Administrator on 2017/4/17.
  */
-
-var promise = $.get("/data/state.json")
-
 //配置路由信息
-queueApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+editorApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise("/index");
 
-    $urlRouterProvider.otherwise("/login");
-
-    //设置菜单项
-    var buildState = function(data){
-
-        //jetty 和 tomcat中返回的结果不一致
-        if(typeof  data =='string'){
-            data = JSON.parse(data);
-        }
-
-
-        for(var i = 0 ;i<data.length;i++){
-            var state = data[i] ;
-            var option = {} ;
-            option.url= state.url;
-            option.views={};
-
-            if(state.content){
-                if(state.content.state=='base'){
-                    option.views.content={}
-                    option.views.content.templateUrl = state.content.templateUrl;
-                    option.views.content.controller = state.content.controller
-                }
-
-                if(state.content.state=='overwrite'){
-                    option.views["content@"]={}
-                    option.views["content@"].templateUrl = state.content.templateUrl;
-                    option.views["content@"].controller = state.content.controller
+    //登录页面
+    $stateProvider
+        .state("login",{
+            url:"/login",
+            resolve:{
+                loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'editorApp',
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                        files: [
+                            'javascript/controllers/common/login-ctrl.js'
+                        ]
+                    });
+                }]
+            },
+            views:{
+                'content':{
+                    controller:"loginCtrl",
+                    templateUrl:'views/common/login.html'
                 }
             }
-            if(state.mainContent){
-                if(state.mainContent.state=='base'){
-                    option.views.mainContent={}
-                    option.views.mainContent.templateUrl = state.mainContent.templateUrl;
-                    option.views.mainContent.controller = state.mainContent.controller
-                }
-
-                if(state.mainContent.state=='overwrite'){
-                    option.views["mainContent@"]={}
-                    option.views["mainContent@"].templateUrl = state.mainContent.templateUrl;
-                    option.views["mainContent@"].controller = state.mainContent.controller
-                }
+        });
+    //工作管理第一页
+    $stateProvider.state("index",{
+        url:'/index',
+        views:{
+            'content':{
+                templateUrl:'views/index.html',
+                controller:'adminIndexCtrl'
             }
-
-            console.log(option);
-            $stateProvider.state(state.name,option)
+        },
+        resolve:{
+            loadMyCtrl:['$ocLazyLoad',function($ocLazyLoad){
+                return $ocLazyLoad.load({
+                    name: 'editorApp',
+                    insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                    files: [
+                        'javascript/controllers/admin-index.js'
+                    ]
+                });
+            }]
         }
+    })
+    //模板制作
+    $stateProvider.state("index.templateMake",{
+        url:"/template",
+        views:{
+            'mainContent':{
+                templateUrl:'views/editor/editor-core.html',
+                controller:"editorCoreCtrl"
+            }
+        },
+        resolve:{
+            loadCtrl:['$ocLazyLoad',function($ocLazyLoad){
+                return $ocLazyLoad.load({
+                    name: 'editorApp',
+                    insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                    files: [
+                        'javascript/controllers/editor/editor-core.js',
+                    ]
+                })
+            }]
+        }
+    })
 
-    }
-
-    //加载菜单项
-    promise.done(function(data){
-        buildState(data);
-    });
-
+    //模板分组管理
+    $stateProvider.state("index.templateGroup",{
+        url:"/template-group",
+        views:{
+            'mainContent':{
+                templateUrl:'views/template/template-group.html',
+                controller:"templateGroupCtrl"
+            }
+        },
+        resolve:{
+            loadCtrl:['$ocLazyLoad',function($ocLazyLoad){
+                return $ocLazyLoad.load({
+                    name: 'editorApp',
+                    insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                    files: [
+                        'javascript/controllers/template/template-group-ctrl.js',
+                        'static/metronic/assets/global/plugins/jstree/dist/jstree.js',
+                        'static/metronic/assets/global/plugins/jstree/dist/themes/default/style.min.css'
+                    ]
+                })
+            }]
+        }
+    })
 
 }])

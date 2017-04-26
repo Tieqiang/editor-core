@@ -1,0 +1,16 @@
+<div class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
+
+    <div class="page-header navbar navbar-fixed-top" ng-include="'views/common/header.html'" ng-controller="adminIndexCtrl"></div>
+    <div class="clearfix"></div>
+    <div class="page-container">
+        <div class="page-sidebar-wrapper" ng-include="'views/common/slider.html'" ng-controller="adminIndexCtrl"></div>
+        <div class="page-content-wrapper">
+            <div class="page-content" ng-style="{'min-height':'{{windowHeight}}px'}" ui-view="mainContent">
+            </div>
+        </div>
+    </div>
+    <div class="page-footer">
+        <div class="page-footer-inner"> 2017 神州数码医疗科技股份有限公司
+        </div>
+    </div>
+</div>
