@@ -51,5 +51,22 @@ public class ElementService {
         return Response.status(Response.Status.OK).entity(baseFacade.merge(elementTypeDict)).build();
     }
 
+    /**
+     * 根据父类ID获取状态
+     * @param parentId
+     * @return
+     */
+    @GET
+    @Path("list-element-type-by-parent-id")
+    public List<ElementTypeDict> listElementTypeDictByParentId(@QueryParam("parentId") String parentId,@QueryParam("rootFlag") String rootFlag){
+
+        String hql = "from ElementTypeDict as dict where 1=1 ";
+        if("1".equals(rootFlag)){
+            hql+=" and  dict.id = '"+parentId+"'";
+        }else{
+            hql+=" and  dict.parentTypeId = '"+parentId+"'" ;
+        }
+        return baseFacade.createQuery(ElementTypeDict.class,hql,new ArrayList<>()).getResultList() ;
+    }
 
 }

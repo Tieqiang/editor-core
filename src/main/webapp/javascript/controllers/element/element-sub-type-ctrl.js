@@ -4,6 +4,7 @@
 //数据源类型管理
 angular.module("editorApp").controller("elementSubTypeCtrl",['$scope','$http','$window','$uibModal','$state','$stateParams',function($scope,$http,$window,$uibModal,$state,$stateParams){
     $scope.rootElementType = $stateParams.elementType;
+
     if(!$scope.rootElementType){
         parent.layer.alert("没有找到模板数据")
         $state.go("index.elementType")
@@ -11,6 +12,62 @@ angular.module("editorApp").controller("elementSubTypeCtrl",['$scope','$http','$
     }
     $scope.minHeight = $window.innerHeight - 50 ;
 
+
+    //菜单树
+    $scope.tree =$("#tree").jstree({
+        "core" : {
+            "themes" : {
+                "responsive": false
+            },
+            "check_callback" : true,
+            'data' : {
+                url:function (node) {
+                    var returnUrl = "api/element/list-element-type-by-parent-id?lazy";
+                    console.log(node) ;
+                    if(node.id=="#"){
+                        returnUrl+="&rootFlag=1&parentId="+$scope.rootElementType.id;
+                    }else{
+                        returnUrl+="&rootFlag=0&parentId="+$scope.rootElementType.id;
+                    }
+                    return returnUrl;
+                },
+                data:function(node){
+                    console.log("我是data我被执行了");
+                    console.log(node);
+                    return { "parentId" : node.id } ;
+                },
+                dataFilter:function(data){
+                    console.log("我是dataFilter我被执行了")
+                    data= JSON.parse(data);
+                    var returnData = [] ;
+                    console.log($scope.rootElementType)
+
+                    for(var i=0;i<data.length;i++){
+                            var obj={} ;
+                            obj.text=data[i].elementTypeName;
+                            obj.id = data[i].id ;
+                            obj.state = {} ;
+                            obj.state.opend=false;
+                            obj.children=true;
+                            returnData.push(obj);
+                    }
+                    console.log(JSON.stringify(returnData))
+
+                    return JSON.stringify(returnData);
+                }
+            }
+        },
+        "types" : {
+            "default" : {
+                "icon" : "fa fa-folder icon-state-warning icon-lg"
+            },
+            "file" : {
+                "icon" : "fa fa-file icon-state-warning icon-lg"
+            }
+        },
+        "state" : { "key" : "demo2" },
+        "plugins" : [ "dnd", "state", "types" ],
+    });
     //加载信息
     $scope.loadData = function(elementTypeName){
         $http.get("/api/element/list-parent-type?name="+elementTypeName).success(function(data){
