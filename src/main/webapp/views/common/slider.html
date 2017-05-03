@@ -2,15 +2,6 @@
     <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-hover-submenu "
         data-keep-expanded="false"
         data-auto-scroll="true" data-slide-speed="200">
-        <!--<li class="nav-item" ng-class="{true:'start active open',false:''}[nowState=='templateMake']"-->
-            <!--ng-click="menuClick('templateMake');">-->
-            <!--<a href="javascript:;" class="nav-link nav-toggle" ui-sref="index.templateMake">-->
-                <!--<i class="icon-home"></i>-->
-                <!--<span class="title">模板制作</span>-->
-                <!--<span class="selected" ng-if="nowState=='templateMake'"></span>-->
-                <!--<span class="arrow open"></span>-->
-            <!--</a>-->
-        <!--</li>-->
         <li class="nav-item" ng-click="menuClick('templateGroup','模板分组管理');"
             ng-class="{true:'start active open',false:''}[nowState=='templateGroup']">
             <a href="javascript:;" class="nav-link nav-toggle" ui-sref="index.templateGroup">
@@ -29,15 +20,49 @@
                 <span class="arrow open"></span>
             </a>
         </li>
-        <li class="nav-item" ng-click="menuClick('stationQueue','工作台队列管理');"
-            ng-class="{true:'start active open',false:''}[nowState=='stationQueue']">
-            <a href="javascript:;" class="nav-link nav-toggle" ui-sref="admin.stationQueue">
+        <li class="nav-item" ng-click="menuClick('patManager','档案管理');"
+            ng-class="{true:'start active open',false:''}[nowState=='patManager']">
+            <a href="javascript:;" class="nav-link nav-toggle" >
                 <i class="icon-social-dribbble"></i>
-                <span class="title">工作台队列</span>
-                <span class="selected" ng-if="nowState=='stationQueue'"></span>
+                <span class="title">档案管理</span>
+                <span class="selected" ng-if="nowState=='patManager'"></span>
                 <span class="arrow open"></span>
             </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="javascript:;" ui-sref="index.patCreate">
+                        <i class="icon-puzzle"></i><span>档案创建</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" ui-sref="index.patSearch">
+                        <i class="icon-paper-clip"></i><span>档案查阅</span>
+                    </a>
+                </li>
+            </ul>
         </li>
+       <li class="nav-item" ng-click="menuClick('element','元数据管理');"
+            ng-class="{true:'start active open',false:''}[nowState=='element']">
+            <a href="javascript:;" class="nav-link nav-toggle" >
+                <i class="icon-social-dribbble"></i>
+                <span class="title">元数据管理</span>
+                <span class="selected" ng-if="nowState=='element'"></span>
+                <span class="arrow open"></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="javascript:;" ui-sref="index.elementType">
+                        <i class="icon-puzzle"></i><span>元数据类型管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" ui-sref="index.elementData">
+                        <i class="icon-paper-clip"></i><span>元数据管理</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
     </ul>
 
 </div>

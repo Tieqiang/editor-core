@@ -1,0 +1,79 @@
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption">
+            <span class="caption-subject">
+              人员信息建档
+            </span>
+        </div>
+        <div class="actions">
+            <a href="javascript:;" class="btn blue btn-circle">保存</a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <form class="form form-horizontal">
+            <input type="hidden" ng-model="currentPat.id">
+            <div class="form-group">
+                <label class="control-label col-md-1">
+                    姓名
+                </label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" ng-model="currentPat.name">
+                </div>
+                <label class="control-label col-md-2">
+                    性别
+                </label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" ng-model="currentPat.sex">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-1">
+                    社保号
+                </label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" ng-model="currentPat.insureNo">
+                </div>
+                <label class="control-label col-md-2">
+                    出生日期
+                </label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" ng-model="currentPat.birthday">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-1">
+                    病历号
+                </label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" ng-model="currentPat.mrNo">
+                </div>
+                <label class="control-label col-md-2">
+                    联系电话
+                </label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" ng-model="currentPat.phoneNo">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-1">
+                    联系人姓名
+                </label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" ng-model="currentPat.contactPersonName">
+                </div>
+                <label class="control-label col-md-2">
+                    联系人电话
+                </label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" ng-model="currentPat.contactPersonTel">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-1">现住址</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" ng-model="currentPat.address">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

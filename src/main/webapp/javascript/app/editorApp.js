@@ -33,10 +33,7 @@ editorApp.config(['$controllerProvider', function($controllerProvider) {
 editorApp.run(['$rootScope','$log','localStorageService',function($rootScope,$log,localStorageService){
     //状态改变
     $rootScope.$on("stateChangeStart",function(event, toState, toParams, fromState, fromParams, options){
-        console.log(fromState) ;
-        if(fromState=='index.templateMake'){
-            alert("离开了")
-        }
+        console.log("状态发生了改变")
     })
 
 }])

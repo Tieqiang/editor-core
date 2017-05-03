@@ -28,7 +28,6 @@
             return element;
         }
 
-
         //checkboxs
         function isIE() {
             if (window.attachEvent) {
@@ -112,7 +111,7 @@
             new_td_node0.innerHTML = '<td><input type="radio" ' + sChecked + ' name="' + gName + '"></td>';
             new_td_node1.innerHTML = '<td><input type="text" value="' + obj.value + '" name="' + gName + '_value" placeholder="选项值"></td>';
             new_td_node3.innerHTML = '<td><div class="btn-group"><a title="上移" class="btn btn-small btn-info" href="javascript:void(0);" onclick="fnMoveUp(this)"><i class="icon-white icon-arrow-up"></i></a><a title="下移" class="btn btn-small btn-info" href="javascript:void(0);" onclick="fnMoveDown(this)"><i class="icon-white icon-arrow-down"></i></a><a title="删除" class="btn btn-small btn-default" href="javascript:void(0);" onclick="fnDeleteRow(this)"><i class="icon-ban-circle"></i></a></div></td>';
-            new_td_node2.innerHTML = "<td><input class='form-control' type=\'text\' name=\'"+gName+"_view\' placeholder=\'显示值\'></td>"
+            new_td_node2.innerHTML = "<td><input class='form-control' type=\'text\' name=\'" + gName + "_view\' placeholder=\'显示值\'></td>"
             return true;
         }
         function fnAdd() {
@@ -135,17 +134,15 @@
                 var inputs = nTr[i].getElementsByTagName('input');
 
                 if (inputs.length > 0) {
-                    if (!inputs[1].value||!inputs[2].value) continue;
+                    if (!inputs[1].value || !inputs[2].value) continue;
                     var sChecked = '';
                     if (inputs[0].checked) sChecked = 'checked="checked"';
-                    html += '<input name="' + gName + '"  value="' + inputs[1].value + '" ng-model="pageData.'+gName+'" ' + sChecked + ' type="radio"/>' + inputs[2].value + '&nbsp;';
+                    html += '<input name="' + gName + '"  value="' + inputs[1].value + '" ng-model="pageData.' + gName + '" ' + sChecked + ' type="radio"/>' + inputs[2].value + '&nbsp;';
                     if (gChecked == 'orgchecked1')//竖排
                         html += '<br/>';
                 }
             }
-            //alert(html);
             return html;
-
         }
     </script>
 </head>
@@ -211,8 +208,6 @@
             var length = inputTags.length;
             var aInputs = [];
             for (var i = 0; i < length; i++) {
-                //testEle.setAttribute("test","aaa"); // 自定义属性 设置
-                //testEle.attributes["test"].nodeValue; // 获得
                 if (inputTags[i].type == 'radio')
                     fnAddComboTr(gName, inputTags[i]);
             }
@@ -243,7 +238,9 @@
                     parent.layer.alert("系统提示：请添加选项")
                     return false;
                 }
-                var html = options;
+                var html = '<span leipiplugins="radios" title="' + gTitle + '" name="leipiNewField">';
+                html += options;
+                html += '</span>';
                 editor.execCommand('insertHtml', html);
                 return true;
             } catch (e) {

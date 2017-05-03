@@ -61,7 +61,15 @@ angular.module("editorApp").controller("templateManagerCtrl",['$scope','$http','
 
     //删除模板
     $scope.removeTemplate = function(obj){
-
+        if(!obj||!obj.id){
+            parent.layer.alert("系统提示：删除的模板出现了错误，请联系系统维护人员")
+            return ;
+        }
+        obj.status="-1";
+        $http.post("/api/template/merge-template",obj).success(function(data){
+            $scope.loadTemplate(obj.templateGroupId);
+            parent.layer.alert("系统提示：删除成功！")
+        })
     }
 
     //新增模板
