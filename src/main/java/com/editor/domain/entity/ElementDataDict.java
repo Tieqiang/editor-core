@@ -14,6 +14,7 @@ public class ElementDataDict {
     private String elementName;
     private String viewType;
     private String standCode;
+    private String dataRelamId;
 
     @Id
     @Column(name = "id")
@@ -79,5 +80,15 @@ public class ElementDataDict {
         result = 31 * result + (viewType != null ? viewType.hashCode() : 0);
         result = 31 * result + (standCode != null ? standCode.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "data_relam_id")
+    public String getDataRelamId() {
+        return dataRelamId;
+    }
+
+    public void setDataRelamId(String dataRelamId) {
+        this.dataRelamId = dataRelamId;
     }
 }

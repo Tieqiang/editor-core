@@ -15,7 +15,6 @@
         <class>com.editor.domain.entity.ElementTypeDict</class>
         <class>com.editor.domain.entity.DataRelamDetail</class>
         <class>com.editor.domain.entity.DataRelamDict</class>
-        <class>com.editor.domain.entity.ElementDataVsRelam</class>
 
 
         <!--字典类型结束-->

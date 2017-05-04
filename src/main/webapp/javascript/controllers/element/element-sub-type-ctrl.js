@@ -4,13 +4,14 @@
 //数据源类型管理
 angular.module("editorApp").controller("elementSubTypeCtrl",['$scope','$http','$window','$uibModal','$state','$stateParams',function($scope,$http,$window,$uibModal,$state,$stateParams){
     $scope.rootElementType = $stateParams.elementType;
+    $scope.currentTypeId=undefined;
 
     if(!$scope.rootElementType){
         parent.layer.alert("没有找到模板数据")
         $state.go("index.elementType")
         return ;
     }
-    $scope.minHeight = $window.innerHeight - 50 ;
+    $scope.minHeight = $window.innerHeight - 150 ;
 
 
     //菜单树
@@ -23,21 +24,17 @@ angular.module("editorApp").controller("elementSubTypeCtrl",['$scope','$http','$
             'data' : {
                 url:function (node) {
                     var returnUrl = "api/element/list-element-type-by-parent-id?lazy";
-                    console.log(node) ;
                     if(node.id=="#"){
                         returnUrl+="&rootFlag=1&parentId="+$scope.rootElementType.id;
                     }else{
-                        returnUrl+="&rootFlag=0&parentId="+$scope.rootElementType.id;
+                        returnUrl+="&rootFlag=0&parentId="+node.id;
                     }
                     return returnUrl;
                 },
                 data:function(node){
-                    console.log("我是data我被执行了");
-                    console.log(node);
                     return { "parentId" : node.id } ;
                 },
                 dataFilter:function(data){
-                    console.log("我是dataFilter我被执行了")
                     data= JSON.parse(data);
                     var returnData = [] ;
                     console.log($scope.rootElementType)
@@ -49,6 +46,7 @@ angular.module("editorApp").controller("elementSubTypeCtrl",['$scope','$http','$
                             obj.state = {} ;
                             obj.state.opend=false;
                             obj.children=true;
+                            obj.memo = data[i].memo ;
                             returnData.push(obj);
                     }
                     console.log(JSON.stringify(returnData))
@@ -66,12 +64,73 @@ angular.module("editorApp").controller("elementSubTypeCtrl",['$scope','$http','$
             }
         },
         "state" : { "key" : "demo2" },
-        "plugins" : [ "dnd", "state", "types" ],
+        "plugins" : [ "dnd", "state", "types","contextmenu"],
+        "contextmenu":{
+            'items':{
+                'create':{
+                    label:'同级分组',
+                    action:function(data){
+                        var inst = jQuery.jstree.reference(data.reference),
+                            obj = inst.get_node(data.reference);
+                        console.log(obj);
+                        if(obj.parenatTypeId=="#"){
+                            parent.layer.alert("系统提示：根元素不允许添加同级")
+                            return ;
+                        }
+                        $scope.addSameLevelGroup(obj);
+                    }
+                },
+                'createSub':{
+                    'label':'新增子分类',
+                    action:function(data){
+                        var inst = jQuery.jstree.reference(data.reference),
+                            obj = inst.get_node(data.reference);
+                        $scope.addNextElementType(obj);
+                    }
+                },
+                'rename':{
+                    label:'编辑分组',
+                    action:function(data){
+                        var inst = jQuery.jstree.reference(data.reference),
+                            obj = inst.get_node(data.reference);
+                        $scope.editElementType(obj);
+                    }
+                },
+                'remove':{
+                    label:'删除分组',
+                    action:function(data){
+                        var inst = jQuery.jstree.reference(data.reference),
+                            obj = inst.get_node(data.reference);
+                        if(obj.children.length){
+                            parent.layer.alert("系统提示：含有子分组不能进行删除")
+                            return ;
+                        }
+                        $scope.removeElementType(obj);
+                    }
+                },
+                'addElement':{
+                    label:"新增元数据",
+                    action:function(data){
+                        var inst = jQuery.jstree.reference(data.reference),
+                            obj = inst.get_node(data.reference);
+                        $scope.addDataElement(obj);
+                    }
+                },
+            }
+        }
+    });
+
+    //菜单选项发生改变
+    $('#tree').on("changed.jstree", function (e, data) {
+        console.log(data.selected);
+        var groupId = data.selected[0] ;
+        $scope.currentTypeId = groupId;
+        $scope.loadData(groupId) ;
     });
     //加载信息
-    $scope.loadData = function(elementTypeName){
-        $http.get("/api/element/list-parent-type?name="+elementTypeName).success(function(data){
-            $scope.elementTypeGridOptions.data=data ;
+    $scope.loadData = function(typeId){
+        $http.get("/api/element/list-element-data-by-type?typeId="+typeId).success(function(data){
+            $scope.elementDataGridOptions.data=data ;
         })
     }
 
@@ -86,7 +145,7 @@ angular.module("editorApp").controller("elementSubTypeCtrl",['$scope','$http','$
     })
 
     //表格信息配置
-    $scope.elementTypeGridOptions={
+    $scope.elementDataGridOptions={
         rowHeight:'40',
         enableRowSelection: true,
         enableRowHeaderSelection: false,
@@ -97,13 +156,18 @@ angular.module("editorApp").controller("elementSubTypeCtrl",['$scope','$http','$
         enableColumnMenus:false,
         data:[],
         columnDefs:[{
-            displayName:"元数据类型名称",
-            field:'elementTypeName',
+            displayName:"元数据名称",
+            field:'elementName',
             headerCellClass:'headerCellClass',
             cellClass:"cellClass"
         },{
-            displayName:"类型描述",
-            field:"memo",
+            displayName:"元数据类型",
+            field:"viewType",
+            headerCellClass:"headerCellClass",
+            cellClass:"cellClass"
+        },{
+            displayName:"对应标准码",
+            field:"standCode",
             headerCellClass:"headerCellClass",
             cellClass:"cellClass"
         },{
@@ -112,24 +176,43 @@ angular.module("editorApp").controller("elementSubTypeCtrl",['$scope','$http','$
             headerCellClass:'headerCellClass',
             cellClass:"cellClass",
             width:'20%',
-            cellTemplate:"<div class=\'ui-grid-cell-contents\'>\n    <a href=\'javascript:;\' class=\'btn btn-sm btn-info\' ng-click=\'grid.appScope.editType(row.entity)\'>\n        <i class=\'fa fa-edit\'></i>\n        编辑\n    </a>\n    <a href=\'javascript:;\' class=\'btn btn-sm btn-success\'  ng-click=\'grid.appScope.editSubType(row.entity)\'>\n        <i class=\'fa fa-plus\'></i>\n        子类型\n    </a>\n    <a href=\'javascript:;\' class=\'btn btn-sm btn-danger\' ng-click=\'grid.appScope.deleteType(row.entity)\'>\n        <i class=\'fa fa-remove\'></i>\n        停用\n    </a>\n</div>"
+            cellTemplate:"<div class=\'ui-grid-cell-contents\'>\n    <a href=\'javascript:;\' class=\'btn btn-sm btn-info fa-only\' ng-click=\'grid.appScope.editElementData(row.entity)\'>\n        <i class=\'fa fa-edit\'></i>\n\n    </a>\n    <a href=\'javascript:;\' class=\'btn btn-sm btn-danger fa-only\' ng-click=\'grid.appScope.delElementData(row.entity)\'>\n        <i class=\'fa fa-remove\'></i>\n    </a>\n</div>"
         }]
     };
-    $scope.elementTypeGridOptions.onRegisterApi=function(gridApi){
+
+    $scope.elementDataGridOptions.data =[] ;
+    $scope.elementDataGridOptions.onRegisterApi=function(gridApi){
         $scope.gridApi = gridApi ;
     }
 
     //新增类别
-    $scope.addNewType = function(){
-        $scope.openModal({},"新增类别")
+    $scope.addSameLevelGroup = function(data){
+        var obj = {} ;
+        obj.parentTypeId = data.parent ;
+        $scope.openElementTypeModal(obj,"新增类别")
+    }
+    //编辑类别
+    $scope.editElementType = function(data){
+        var obj = {} ;
+        obj.id = data.id ;
+        obj.elementTypeName = data.text ;
+        obj.memo = data.memo ;
+        obj.parentTypeId = data.parent ;
+        $scope.openElementTypeModal(obj,"编辑类别")
+    }
+    //新增自雷
+    $scope.addNextElementType = function(data){
+        var obj = {} ;
+        obj.parentTypeId = data.id ;
+        $scope.openElementTypeModal(obj,"编辑类别")
     }
 
     //打开对话窗口
-    $scope.openModal=function(currentType,action){
-        var elementTypeModalInstance = $uibModal.open({
+    $scope.openElementTypeModal=function(currentType,action){
+        var elementTypeDictModalInstance = $uibModal.open({
             backdrop:false,
-            templateUrl:"elementTypeDialog.html",
-            controller:"elementTypeModalInstanceCtrl",
+            templateUrl:"ElementTypeDictModal.html",
+            controller:"ElementTypeDictModalInstanceCtrl",
             resolve:{
                 action:function(){
                     return action ;
@@ -140,32 +223,58 @@ angular.module("editorApp").controller("elementSubTypeCtrl",['$scope','$http','$
             }
         })
 
-        elementTypeModalInstance.result.then(function(obj){
+        elementTypeDictModalInstance.result.then(function(obj){
             $http.post("api/element/element-type-merge",obj).success(function(data){
                 parent.layer.alert("系统提示：更新成功");
-                $scope.loadData();
+                var instance = $('#tree').jstree(true);
+                instance.refresh("#"+obj.parentTypeId);
+                instance.select_node(data.id)
             })
         })
     }
 
-    //编辑类型
-    $scope.editType = function(data){
-        delete data.$$hashKey ;
-        $scope.openModal(data,"编辑")
-    }
-
-    //编辑子类型
-    $scope.editSubType = function(data){
-        $state.go("index.elementSubType",{elementType:data});
-    }
 
     //删除类型
-    $scope.deleteType=function(data){
+    $scope.removeElementType=function(data){
+        console.log(data)
+    }
 
+
+    //打开数据源窗口
+    $scope.openDataElementModal = function(currentElement,action,currentTypeId){
+        var ElementDataModalInstance = $uibModal.open({
+            backdrop:false,
+            templateUrl:"ElementDataModal.html",
+            controller:"ElementDataModalInstanceCtrl",
+            resolve:{
+                action:function(){
+                    return action ;
+                },
+                currentElement:function(){
+                    return currentElement ;
+                }
+            }
+        })
+
+        ElementDataModalInstance.result.then(function(obj){
+            $http.post("api/element/merge-element-data?typeId="+currentTypeId,obj).success(function(data){
+                parent.layer.alert("系统提示：更新成功");
+                $scope.loadData(currentTypeId)
+            })
+        })
+    }
+
+    $scope.addDataElement=function(){
+        $scope.openDataElementModal({},"新增元数据",$scope.currentTypeId);
+    }
+
+    $scope.editElementData=function (obj) {
+        delete obj.$$hashKey ;
+        $scope.openDataElementModal(obj,"修改元数据",$scope.currentTypeId);
     }
 }]);
 
-angular.module("editorApp").controller("elementTypeModalInstanceCtrl",['$scope','$uibModalInstance','action','currentType',function($scope,$uibModalInstance,action,currentType){
+angular.module("editorApp").controller("ElementTypeDictModalInstanceCtrl",['$scope','$uibModalInstance','action','currentType',function($scope,$uibModalInstance,action,currentType){
     $scope.action = action ;
     $scope.currentType = currentType ;
 
@@ -176,6 +285,40 @@ angular.module("editorApp").controller("elementTypeModalInstanceCtrl",['$scope',
             return ;
         }
         $uibModalInstance.close($scope.currentType);
+    }
+
+    $scope.doCancel=function(){
+        $uibModalInstance.dismiss();
+    }
+
+}]);
+angular.module("editorApp").controller("ElementDataModalInstanceCtrl",['$scope','$uibModalInstance','action','currentElement','$http',function($scope,$uibModalInstance,action,currentElement,$http){
+    $scope.action = action ;
+    $scope.currentElement = currentElement ;
+
+    $scope.dataRelamDetails=[] ;
+    $scope.dataRelams=[] ;
+
+    $scope.loadDataRelams=function(){
+        $http.get("/api/element/list-relam").success(function(data){
+            $scope.dataRelams = data ;
+        })
+    }
+
+    $scope.loadDataRelams();
+
+    $scope.$watch("currentElement.id",function(newValue,oldValue){
+        $http.get("/api/element/list-relam-detail?relamId="+newValue).success(function(data){
+            $scope.dataRelamDetails = data ;
+        })
+    })
+
+    $scope.doOk = function(){
+        if(!$scope.currentElement.elementName){
+            parent.layer.alert("系统提示：名称不能为空")
+            return ;
+        }
+        $uibModalInstance.close($scope.currentElement);
     }
 
     $scope.doCancel=function(){

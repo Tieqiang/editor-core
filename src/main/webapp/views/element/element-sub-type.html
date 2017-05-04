@@ -9,9 +9,115 @@
     </div>
     <div class="portlet-body">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-2" style="border: 1px solid #e5e5e5;" ng-style="{'min-height':'{{minHeight}}px'}">
                 <div id="tree"></div>
+            </div>
+            <div class="col-md-10">
+                <div ui-grid="elementDataGridOptions" ui-grid-auto-resize
+                     ng-style="{'min-height':'{{minHeight}}px'}"></div>
             </div>
         </div>
     </div>
 </div>
+
+<!--元数据编辑模块-->
+<script type="text/ng-template" id="ElementDataModal.html">
+    <div class="modal-header">
+        <div class="modal-title">
+            <h3>{{action}}</h3>
+        </div>
+    </div>
+    <div class="modal-body">
+        <form  class="form-horizontal">
+            <input type="hidden" ng-model="currentElement.id">
+            <div class="form-group">
+                <lable class="control-label col-md-3">
+                    元数据名称
+                </lable>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" ng-model="currentElement.elementName">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">
+                    元数据类型
+                </label>
+                <div class="col-md-9">
+                    <select name="viewType" ng-model="currentElement.viewType" class="form-control">
+                        <option value="">请选择类型</option>
+                        <option value="input">输入文本</option>
+                        <option value="readOnlyText">只读文本</option>
+                        <option value="radio">单选项</option>
+                        <option value="checkbox">多选选项</option>
+                        <option value="select">下拉选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">
+                    对应标准数据
+                </label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" ng-model="currentElement.standCode">
+                </div>
+            </div>
+            <div class="form-group" ng-show="currentElement.viewType=='radio'||currentElement.viewType=='checkbox'||currentElement.viewType=='select'">
+                <label class="control-label col-md-3">值域选择</label>
+                <div class="col-md-9">
+                    <select name="dataRelam" ng-model="currentElement.dataRelamId" class="form-control">
+                        <option value="">请选择值域</option>
+                        <option value="{{dataRelam.id}}" ng-repeat="dataRelam in dataRelams">{{dataRelam.dataRelamName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group"  ng-show="currentElement.viewType=='radio'||currentElement.viewType=='checkbox'||currentElement.viewType=='select'">
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <tr><td>显示值</td><td>存储值</td></tr>
+                        <tr ng-repeat="dataRelamDetail in dataRelamDetails">
+                            <td>{{dataRelamDetail.viewName}}</td>
+                            <td>{{dataRelamDetail.value}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-sm btn-info" ng-click="doOk();">保存</button>
+        <button class="btn btn-sm btn-default" ng-click="doCancel();">取消</button>
+    </div>
+</script>
+
+<!--元数据类型编辑模块-->
+<script type="text/ng-template" id="ElementTypeDictModal.html">
+    <div class="modal-header">
+        <div class="modal-title">
+            <h3>{{action}}</h3>
+        </div>
+    </div>
+    <div class="modal-body">
+        <form  class="from form-horizontal">
+            <input type="hidden" ng-model="currentType.id">
+            <input type="hidden" ng-model="currentType.parentTypeId">
+            <div class="form-group">
+                <label  class="control-label col-md-3">类别名称</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" ng-model="currentType.elementTypeName">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">
+                    分类描述
+                </label>
+                <div class="col-md-9">
+                    <textarea class="form-control" ng-model="currentType.memo"></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-sm btn-info" ng-click="doOk();">保存</button>
+        <button class="btn btn-sm btn-default" ng-click="doCancel();">取消</button>
+    </div>
+</script>
